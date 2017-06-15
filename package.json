@@ -1,0 +1,31 @@
+{
+  "name": "graphql-inventory-api",
+  "version": "1.0.0",
+  "description": "Building complex API queries with GraphQL - Demo: An Inventory API",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orinami/graphql-inventory-api.git"
+  },
+  "keywords": [
+    "graphql",
+    "graphql-api",
+    "graphql-schema",
+    "graphql-js"
+  ],
+  "author": "Orinami Olatunji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Orinami/graphql-inventory-api/issues"
+  },
+  "homepage": "https://github.com/Orinami/graphql-inventory-api#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "express-graphql": "^0.6.6",
+    "graphql": "^0.10.1",
+    "lodash": "^4.17.4"
+  }
+}
