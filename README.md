@@ -1,7 +1,3 @@
-# graphql-inventory-api
-Understanding GraphQL Queries
-
-
 # Installation
 To clone the repo, make sure you have `git` installed on your machine. 
 
