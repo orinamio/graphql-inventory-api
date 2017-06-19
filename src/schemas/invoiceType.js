@@ -1,12 +1,11 @@
 const _ = require('lodash'),
-
-  { GraphQLString, GraphQLInt, GraphQLID, GraphQLFloat, GraphQLObjectType, 
-    GraphQLBoolean } = require('graphql'),
-    
+{ GraphQLString, GraphQLInt, GraphQLID, GraphQLFloat, GraphQLObjectType, 
+  GraphQLBoolean } = require('graphql'),
+  
   Items = require('../data/items'),
   ItemType = require('./itemType.js');
 
-let InvoiceType = new GraphQLObjectType({
+const InvoiceType = new GraphQLObjectType({
   name: 'Invoices',
   description: 'An Invoice',
   fields: {

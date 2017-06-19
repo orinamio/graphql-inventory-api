@@ -1,6 +1,6 @@
 const { GraphQLString, GraphQLInt, GraphQLID, GraphQLFloat, GraphQLBoolean, GraphQLObjectType } = require('graphql');
 
-let ItemType = new GraphQLObjectType({
+const ItemType = new GraphQLObjectType({
   name: 'Items',
   description: 'An Item',
   fields: {
@@ -17,7 +17,7 @@ let ItemType = new GraphQLObjectType({
     tax_type: { type: GraphQLString },
     status: { type: GraphQLString },
     item_id: { type: GraphQLID },
-    name: { type: GraphQLString },
+    item_name: { type: GraphQLString },
     rate: { type: GraphQLFloat },
     pricebook_rate: { type: GraphQLFloat },
     purchase_rate: { type: GraphQLFloat },

@@ -1,85 +1,50 @@
 const _ = require('lodash'),
-
-  { GraphQLID, GraphQLInt, GraphQLFloat, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLNonNull,
-    GraphQLObjectType, GraphQLInputObjectType, GraphQLEnumType, GraphQLSchema } = require('graphql'),
+{ GraphQLID, GraphQLInt, GraphQLFloat, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLNonNull,
+  GraphQLObjectType, GraphQLInputObjectType, GraphQLEnumType, GraphQLSchema } = require('graphql'),
   
   Items = require('./data/items'),
   Invoices = require('./data/invoices'),
   ItemType = require('./schemas/itemType'),
   InvoiceType = require('./schemas/invoiceType'),
-  { ItemFilter, ItemsFilter, InvoiceFilter } = require('./operations/filters');
-
-let ItemOrderBy = new GraphQLEnumType({
-  name: 'ItemOrderBy',
-  values: {
-    itemId_ASC: { value: '' },
-    itemId_DESC: { value: '' },
-  }
-});
+  { ItemFilter, ItemsFilter, InvoiceFilter } = require('./filters');
 
 // Root Query
-let InventoryAPIQueryType = new GraphQLObjectType({
+const InventoryAPIQueryType = new GraphQLObjectType({
   name: 'InventoryAPIQueryType',
   description: 'Inventory API Query Schema',
   fields: {
     getItem: {
       type: ItemType,
+      description: 'Retrieve an Item',
       args: { 
-        filter: { type: new GraphQLNonNull(ItemFilter) },
-        orderBy: { type: ItemOrderBy }
+        filter: { type: new GraphQLNonNull(ItemFilter) }
       },
-      resolve: (source, {filter, orderBy}) => {
-        if(filter){
-          if (filter.item_id) {
-            return _.find(Items, i => i.item_id == filter.item_id);
-          }
-          else if (filter.tax_id) {
-            return _.find(Items, i => i.tax_id == filter.tax_id);
-          }
-          else { return; }
+      resolve: (source, {filter}) => {
+        if (filter.item_id) {
+          return _.find(Items, i => i.item_id == filter.item_id);
         }
-        if (orderBy) {
-          if (orderBy.itemId_ASC) {
-            return _.sortBy(Items, i => i.item_id);
-          }
-          else if (orderBy.itemId_DESC) {
-            let desc = _.sortBy(Items, i => i.item_id);
-            return desc.reverse;
-          }
-          else { return; }
-        } 
+        else if (filter.tax_id) {
+          return _.find(Items, i => i.tax_id == filter.tax_id);
+        }
+        else { return; }
       }
     },
     getItems: {
       type: new GraphQLList(ItemType),
-      description: 'List of Items',
+      description: 'List Items',
       args: { 
         filter: { type: ItemsFilter },
-        orderBy: { type: ItemOrderBy },
         first: { type: GraphQLInt },
         last: { type: GraphQLInt }
       },
-      resolve: (source, {filter, orderBy, first, last}) => {
+      resolve: (source, {filter, first, last}) => {
         if(filter) {
           if (filter.group_id) {
             return _.filter(Items, i => i.group_id == filter.group_id);
           }
-          else if (filter.unit) {
-            return _.filter(Items, i => i.unit == filter.unit);
-          }
-          else if (filter.vendor_id) {
+          if (filter.vendor_id) {
             return _.filter(Items, i => i.vendor_id == filter.vendor_id);
           }
-          else { return; }
-        }
-        if (orderBy) {
-          if (orderBy.itemId_ASC) {
-            return _.sortBy(Items, i => i.item_id);
-          }
-          else if (orderBy.itemId_DESC) {
-            return _.orderBy(Items, ['item_id'], ['desc']);
-          }
-          else { return; }
         }
         if (first) {
           return _.slice(Items, 0, first);
@@ -92,6 +57,7 @@ let InventoryAPIQueryType = new GraphQLObjectType({
     },
     getInvoice: {
       type: InvoiceType,
+      description: 'Retrieve an Invoice',
       args: {
         invoice_id: { type: GraphQLID },
         invoice_number: { type: GraphQLString },
@@ -112,14 +78,14 @@ let InventoryAPIQueryType = new GraphQLObjectType({
     },
     getInvoices: {
       type: new GraphQLList(InvoiceType),
-      description: 'List of Invoices',
+      description: 'List Invoices',
       resolve: () => Invoices
     }
   }
 });
 
 // GraphQL Schema declaration
-let InventoryAPISchema = new GraphQLSchema({
+const InventoryAPISchema = new GraphQLSchema({
   query: InventoryAPIQueryType
 });
 

@@ -1,23 +1,22 @@
 const { GraphQLID, GraphQLInt, GraphQLFloat, GraphQLString, GraphQLBoolean, 
   GraphQLInputObjectType, GraphQLEnumType } = require('graphql');
 
-let ItemFilter = new GraphQLInputObjectType({
+const ItemFilter = new GraphQLInputObjectType({
   name: 'ItemFilter',
   fields: {
     item_id: { type: GraphQLID },
     tax_id: { type: GraphQLID },
   }
 });
-let ItemsFilter = new GraphQLInputObjectType({
+const ItemsFilter = new GraphQLInputObjectType({
   name: 'ItemsFilter',
   fields: {
     group_id: { type: GraphQLID },
-    unit: { type: GraphQLString },
     vendor_id: { type: GraphQLID }
   }
 });
 
-let InvoiceFilter = new GraphQLInputObjectType({
+const InvoiceFilter = new GraphQLInputObjectType({
   name: 'InvoiceFilter',
   fields: {
     invoice_id: { type: GraphQLID },
@@ -26,4 +25,4 @@ let InvoiceFilter = new GraphQLInputObjectType({
   }
 });
 
-module.exports = { ItemFilter, ItemsFilter, InvoiceFilter}
+module.exports = { ItemFilter, ItemsFilter, InvoiceFilter }
