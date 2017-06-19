@@ -8,6 +8,6 @@ app.use('/', graphqlHTTP({
   graphiql: true //set to false if you don't want graphiql enabled
 }));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT);
 console.log(`GraphQL API server running at localhost:${PORT}`);
