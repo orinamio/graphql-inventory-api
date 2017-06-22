@@ -20,6 +20,18 @@ const InventoryAPIQueryType = new GraphQLObjectType({
         filter: { type: new GraphQLNonNull(ItemFilter) }
       },
       resolve: (source, {filter}) => {
+        /*
+
+          FIRST METHOD
+          ---------------------------------------------------------------------------
+          In the resolve method, the 'filter' argument uses curly braces { } to make
+          itself available. By using this method, operations can be performed on the 
+          'filter' argument directly instead of passing 'args' as the argument and 
+          exposing 'filter' as 'args.filter'.
+
+          There is also another method. This method will be explained below
+
+         */
         if (filter.item_id) {
           return _.find(Items, i => i.item_id == filter.item_id);
         }
@@ -64,6 +76,14 @@ const InventoryAPIQueryType = new GraphQLObjectType({
         item_id: { type: GraphQLID }
       },
       resolve: (source, args) => {
+        /*
+
+          SECOND METHOD: PASSING 'ARGS' DIRECTLY
+          ----------------------------------------------------------------------------
+          In this resolve method, the args is passed directly. To access 'invoice_id',
+          we use 'args.invoice_id'.
+
+         */
         if (args.invoice_id){
           return _.find(Invoices, inv => inv.invoice_id == args.invoice_id);
         }
